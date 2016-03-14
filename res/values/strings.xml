@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">全景校园</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="spot">景点</string>
+
+    <!-- cityList -->
+    <string name="search_hint">搜索：输入城市名</string>
+    <string name="city_list">城市列表</string>
+    <string name="city_name_default">城市名称</string>
+
+    <!-- universityList -->
+    <string name="un_search_hint">搜索：输入学校名</string>
+    <string name="un_list">学校列表</string>
+
+    <!-- unInfo -->
+    <string name="un_name">北京语言大学</string>
+    
+    <!-- SpotInfo -->
+     <string name="update_time">1小时前</string>
+     <string name="fb">发表</string>
+     <string name="zan">赞</string>
+     <string name="user_name_default">栾小宁</string>
+     <string name="comment_content">全景的拍摄需要考虑到视角的问题。同样的，当单纯在脚架上转动相机时可能就会产生类似的现象，当脚架转动时，视角就改变了</string>
+
+    <!-- PullListView -->
+    <string name="get_more">获取更多</string>
+    <string name="release_to_refresh">释放刷新</string>
+    <string name="pull_to_refresh">拖拽刷新</string>
+    <string name="refreshing">正在刷新&#8230;</string>
+    <string name="title_activity_city_list">CityListActivity</string>
+    <string name="title_activity_universitu">UniversituActivity</string>
+    <string name="title_activity_un_info">UnInfoActivity</string>
+    <string name="title_activity_spot">SpotActivity</string>
+    <string name="title_activity_panorana_gl">PanoranaGlActivity</string>
+    
+    <string name="progress_dialog_image_loading">正在加载...</string>
+</resources>

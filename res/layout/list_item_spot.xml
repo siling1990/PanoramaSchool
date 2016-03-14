@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/selector_item_bg" >
+
+    <com.stone.panoramaschool.window.CircleImageView
+        android:id="@+id/imageSpot"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:src="@drawable/default_img"/>
+
+    <TextView
+        android:id="@+id/textSpotName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/imageSpot"
+        android:layout_toRightOf="@+id/imageSpot"
+        android:layout_marginLeft="5dp"
+        android:maxWidth="160dp"
+        android:text="@string/city_name_default"
+        android:textSize="18sp" />
+
+    <LinearLayout
+        android:id="@+id/layoutSpotComment"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textSpotName"
+        android:layout_alignLeft="@+id/textSpotName" >
+
+        <ImageView
+            android:id="@+id/imageView1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/heart_full" />
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/btNext"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/selector_next"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="18dp"
+        android:text="" />
+
+</RelativeLayout>

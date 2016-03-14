@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/selector_item_bg" >
+
+    <TextView
+        android:id="@+id/textUserName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:textColor="@color/darker_gray"
+        android:text="@string/user_name_default"
+        android:textSize="15sp" />
+
+    <com.stone.panoramaschool.window.CircleImageView
+        android:id="@+id/imageUser"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:src="@drawable/default_img" />
+
+    <TextView
+        android:id="@+id/textUpdateTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/textUserName"
+        android:layout_below="@+id/textUserName"
+        android:textSize="12sp"
+        android:textColor="@color/darker_gray"
+        android:text="@string/update_time" />
+
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/textUpdateTime"
+        android:layout_toRightOf="@+id/textUpdateTime"
+        android:layout_marginLeft="5dp"
+        android:textSize="12sp"
+        android:textColor="@color/darker_gray"
+        android:text="@string/fb" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/textUpdateTime"
+        android:layout_below="@+id/textUpdateTime"
+        android:text="@string/zan"
+        android:layout_marginTop="5dp"
+        android:textColor="@color/darker_gray"
+        android:textSize="12sp" />
+
+    <TextView
+        android:id="@+id/textZan"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/textView2"
+        android:layout_toRightOf="@+id/textView2"
+        android:layout_marginLeft="5dp"
+        android:textSize="12sp"
+        android:textColor="@color/darker_gray"
+        android:text="12"
+        />
+
+    <ImageView
+        android:id="@+id/imageView1"
+        android:layout_width="16dp"
+        android:layout_height="16dp"
+        android:layout_alignBottom="@+id/textZan"
+        android:layout_alignLeft="@+id/textView1"
+        android:src="@drawable/heart_line" />
+
+    <TextView
+        android:id="@+id/textContent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/textView2"
+        android:layout_alignRight="@+id/imageSpot"
+        android:layout_below="@+id/textView2"
+        android:textSize="15sp"
+        android:text="@string/comment_content" />
+
+</RelativeLayout>
