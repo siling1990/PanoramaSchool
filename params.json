@@ -1,0 +1,6 @@
+{
+  "name": "Panoramaschool",
+  "tagline": "this is an app to show the panorama images,use the project PanoramaGL",
+  "body": "# 这是一个加载服务器全景图的Android应用\r\n   主要是基于PanoramaGL实现的加载全景图效果，该项目可以在github上搜索到该项目",
+  "note": "Don't delete this file! It's used internally to help with page regeneration."
+}
