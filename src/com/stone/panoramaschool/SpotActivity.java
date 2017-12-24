@@ -279,14 +279,16 @@ public class SpotActivity extends Activity {
 				public void onClick(View arg0) {
 					intent = new Intent(SpotActivity.this, PanoramaGLActivity.class);
 					Log.d("*****全景图片地址****", spot.getSpotPanorama());
-					if (StringUtil.isEmpty(spot.getSpotPanorama())) {
-						Toast toast = Toast.makeText(SpotActivity.this, "暂无全景图片！", Toast.LENGTH_SHORT);
-						toast.setGravity(Gravity.CENTER, 0, 0);
-						toast.show();
-					}else{
+					
+					if (!StringUtil.isEmpty(spot.getSpotPanorama())&&(spot.getSpotPanorama().contains(".png")||spot.getSpotPanorama().contains(".jpg"))) {
 						saveData(spot);
 						StringUtil.saveInfo(SpotActivity.this, "PanoramaGL", spot.getSpotPanorama());
 						startActivity(intent);	
+					}else{
+						Toast toast = Toast.makeText(SpotActivity.this, "暂无全景图片！", Toast.LENGTH_SHORT);
+						toast.setGravity(Gravity.CENTER, 0, 0);
+						toast.show();
+						
 					}
 					
 				}

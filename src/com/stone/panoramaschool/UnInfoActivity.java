@@ -257,17 +257,17 @@ public class UnInfoActivity extends Activity {
 				public void onClick(View arg0) {
 					Intent intent = new Intent(UnInfoActivity.this, PanoramaGLActivity.class);
 					Log.d("*****全景图片地址****", university.getUnImage());
-					if (StringUtil.isEmpty(university.getUnImage())) {
-						Toast toast = Toast.makeText(UnInfoActivity.this, "暂无全景图片！", Toast.LENGTH_SHORT);
-						toast.setGravity(Gravity.CENTER, 0, 0);
-						toast.show();
-					}else{
+					if(!StringUtil.isEmpty(university.getUnImage())&&(university.getUnImage().contains(".png")||university.getUnImage().contains(".jpg"))) {
 						writeToSD(university.getUnImage(),"","test.data");
 						StringUtil.saveInfo(UnInfoActivity.this, "PanoramaGL", university.getUnImage());
 						Spot ss=new Spot();
 						ss.setSpotName(university.getUnName());
 						StringUtil.saveInfo(UnInfoActivity.this, "SpotInfo", GsonUtil.getJsonValue(ss));
 						startActivity(intent);	
+					}else{
+						Toast toast = Toast.makeText(UnInfoActivity.this, "暂无全景图片！", Toast.LENGTH_SHORT);
+						toast.setGravity(Gravity.CENTER, 0, 0);
+						toast.show();
 					}
 					
 				}
