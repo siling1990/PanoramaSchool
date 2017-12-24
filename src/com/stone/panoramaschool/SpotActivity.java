@@ -1,8 +1,12 @@
 package com.stone.panoramaschool;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.net.URLEncoder;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -32,10 +36,14 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
+import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -271,12 +279,12 @@ public class SpotActivity extends Activity {
 				public void onClick(View arg0) {
 					intent = new Intent(SpotActivity.this, PanoramaGLActivity.class);
 					Log.d("*****全景图片地址****", spot.getSpotPanorama());
-					if (StringUtil.isEmpty(spot.getSpotPanorama())||(!spot.getSpotPanorama().toLowerCase().endsWith(".jpg")&&!spot.getSpotPanorama().toLowerCase().endsWith(".png"))) {
+					if (StringUtil.isEmpty(spot.getSpotPanorama())) {
 						Toast toast = Toast.makeText(SpotActivity.this, "暂无全景图片！", Toast.LENGTH_SHORT);
 						toast.setGravity(Gravity.CENTER, 0, 0);
 						toast.show();
 					}else{
-						saveData(spot.getSpotPanorama());
+						saveData(spot);
 						StringUtil.saveInfo(SpotActivity.this, "PanoramaGL", spot.getSpotPanorama());
 						startActivity(intent);	
 					}
@@ -381,7 +389,33 @@ public class SpotActivity extends Activity {
 			if (!StringUtil.isEmpty(comment.getContent())) {
 				viewHolder.textContent.setText(comment.getContent());
 			}
-
+			
+			long timeMils=(new Date()).getTime()-comment.getDateLine()*1000;
+			int ss = 1000;  
+            int mi = ss * 60;  
+            int hh = mi * 60;  
+            int dd = hh * 24;  
+ 
+            long day = timeMils / dd;  
+            long hour = (timeMils - day * dd) / hh;  
+            long minute = (timeMils - day * dd - hour * hh) / mi;  
+			String text="";
+			if(minute>0) {
+				text=minute+"分钟前";
+			}else {
+				text="刚刚";
+			}
+			if(hour>0) {
+				text=hour+"小时前";
+			}
+			if(day>0) {
+				text=day+"天前";
+			}
+            if(day>365) {
+            	text="一年前";
+            }
+			viewHolder.textUpdateTime.setText(text);
+			
 			viewHolder.imageUser.setTag(comment.getUserAvatar());
 
 			// 这句代码的作用是为了解决convertView被重用的时候，图片预设的问题
@@ -392,11 +426,110 @@ public class SpotActivity extends Activity {
 
 	}
 
-	private void saveData(String imageUrl) {
+	private void saveData(Spot spot) {
+		String imageUrl=spot.getSpotPanorama();
+		String jumpStr=spot.getXgqj();
+		List<JSONObject> jsonList=new ArrayList<JSONObject>();
+		if(!StringUtil.isEmpty(jumpStr)) {
+			String[] strArray=jumpStr.split(";");
+			String strJson;
+			String[] strJsonArray;
+			JSONObject json;
+			for(int i=0;i<strArray.length;i++) {
+				strJson=strArray[i];
+				strJsonArray=strJson.split(",");
+				json=new JSONObject();
+				try {
+					json.put("id", strJsonArray[0]);
+					json.put("x", strJsonArray[1]);
+					json.put("y", strJsonArray[2]);
+					json.put("hotspotUrl", strJsonArray[3]);
+					json.put("text", strJsonArray[4]);
+					
+					HotSpotTask hotSpotTask = new HotSpotTask(this,json.getInt("id"));
+					hotSpotTask.execute();
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+					json=null;
+				}
+				if(json!=null) {
+					jsonList.add(json);
+				}
+			}
+		}
+		String hotspots="";
+		for(int i=0;i<jsonList.size();i++) {
+			String hotspot="";
+			try {
+				 TextView tv = new TextView(this);  
+				 tv.setText(jsonList.get(i).getString("text"));
+				 tv.setBackgroundColor(Color.WHITE);
+				 tv.setTextColor(Color.BLACK);
+				 tv.setDrawingCacheEnabled(true);  
+				 tv.measure(View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED), View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED));  
+				 tv.layout(0, 0, tv.getMeasuredWidth(), tv.getMeasuredHeight());  
+				 Bitmap bitmap = Bitmap.createBitmap(tv.getDrawingCache());  
 
+				 File PHOTO_DIR = new File(Environment.getExternalStorageDirectory()+"/stone");//设置保存路径
+
+				 File avaterFile = new File(PHOTO_DIR, "avater"+jsonList.get(i).getString("id")+".jpg");//设置文件名称
+
+                 if(avaterFile.exists()){
+                     avaterFile.delete();
+                 }
+                 try {
+                     avaterFile.createNewFile();
+                     FileOutputStream fos = new FileOutputStream(avaterFile);
+                     bitmap.compress(Bitmap.CompressFormat.JPEG, 100, fos);
+                     fos.flush();
+                     fos.close();
+                 } catch (IOException e) {
+                     e.printStackTrace();
+                 }
+                 tv.destroyDrawingCache();
+				 
+			hotspot="{\n" + 
+					"			\"id\": "+jsonList.get(i).getString("id")+",\n" + 
+					"			\"atv\": "+jsonList.get(i).getString("x")+",\n" + 
+					"			\"ath\": "+jsonList.get(i).getString("y")+",\n" + 
+					"			\"width\": 0.05,\n" + 
+					"			\"height\": 0.05,\n" + 
+					"			\"image\":\""+jsonList.get(i).getString("hotspotUrl")+"\",\n" +
+					"			\"textImage\":\"file:///sdcard/stone/avater"+jsonList.get(i).getString("id")+".jpg\",\n" +
+					"			\"alpha\": 0.8,\n" + 
+					"			\"overAlpha\": 1.0,\n" + 
+					"			\"onClick\": \"lookAt("+jsonList.get(i).getString("y")+", "+jsonList.get(i).getString("x")+", true); load('file:///sdcard/stone/test"+jsonList.get(i).getString("id")+".data', true, BLEND(2.0, 1.0))\"\n" + 
+					"		}";
+			}catch(Exception e) {
+				
+			}
+			String dot=",";
+			if(i==jsonList.size()-1) {
+				dot="";
+			}
+			if(!StringUtil.isEmpty(hotspot)) {
+				hotspots=hotspots+hotspot+dot;	
+			}
+			
+		}
+		writeToSD(imageUrl,hotspots,"test.data");
+
+	}
+
+	private void load() {
+		if (getPTask != null && getPTask.getStatus() == AsyncTask.Status.RUNNING) {
+			getPTask.cancel(true); // 如果Task还在运行，则先取消它
+		}
+
+		getPTask = new GetPTask(this);
+		getPTask.execute();
+	}
+	private void writeToSD(String imageUrl,String hotspots,String fileName) {
 		String result = "";
 		try {
-			InputStream in = getResources().openRawResource(R.raw.json_spherical);
+			InputStream in = getResources().openRawResource(
+					R.raw.json_spherical);
 			// 获取文件的字节数
 			int lenght = in.available();
 			// 创建byte数组
@@ -408,21 +541,13 @@ public class SpotActivity extends Activity {
 			e.printStackTrace();
 		}
 		result = result.replaceAll("IMAGEPATH", imageUrl);
+		result=result.replace("HOTSPOTS", hotspots);
 
 		Log.d("JSONPL", result);
 
-		FileUtil.setStringToFile("/stone", SpotActivity.this, "test.data", result);
+		FileUtil.setStringToFile("/stone", SpotActivity.this, fileName,
+				result);
 	}
-
-	private void load() {
-		if (getPTask != null && getPTask.getStatus() == AsyncTask.Status.RUNNING) {
-			getPTask.cancel(true); // 如果Task还在运行，则先取消它
-		}
-
-		getPTask = new GetPTask(this);
-		getPTask.execute();
-	}
-
 	private void submitComm(String suContent) {
 		if (!StringUtil.isEmpty(suContent)) {
 			if (commTask != null && commTask.getStatus() == AsyncTask.Status.RUNNING) {
@@ -434,7 +559,80 @@ public class SpotActivity extends Activity {
 		}
 
 	}
+	public class HotSpotTask extends AsyncTask<Integer, String, Integer> {
+		private Context mainFrame = null;
+		private int spotId;
 
+		public HotSpotTask(Context mainFrame,int spotId) {
+			this.mainFrame = mainFrame;
+			this.spotId=spotId;
+		}
+
+		@Override
+		protected void onCancelled() {
+			hideCustomProgressDialog();
+			super.onCancelled();
+		}
+
+		@Override
+		protected Integer doInBackground(Integer... params) {
+
+			map = new HashMap<String, String>();
+			// map.put("provinceid", cityId);
+			gson = new Gson();
+			String result = HttpUtil.doPostForm(map, Constants.GETSPOTBYID+ "&spotid=" + this.spotId, false, SpotActivity.this);
+			if (StringUtil.isEmpty(result)) {
+				msgs = "连接服务器超时，请确认网络畅通";
+				return Constants.FAILURE;
+			}
+			// result.s
+			Log.d("********patientList*******", result);
+			JSONObject myJsonObject = null;
+			try {
+				myJsonObject = new JSONObject(result);
+				String r = myJsonObject.getString("r");
+				if (r.equals("no")) {
+					msgs = myJsonObject.getString("msg");
+					return Constants.FAILURE;
+				}
+			} catch (Exception e) {
+
+			}
+			List<Spot> spots=new ArrayList<Spot>();
+			try {
+				spots = gson.fromJson(result,
+						new TypeToken<List<Spot>>() {
+						}.getType());
+				writeToSD(spots.get(0).getSpotPanorama(),"","test"+spots.get(0).getSpotId()+".data");
+				
+				return Constants.SUCCESS;
+			} catch (Exception e) {
+				msgs = e.getMessage();
+			}
+			return Constants.FAILURE;
+		}
+
+		@Override
+		protected void onPreExecute() {
+			showCustomProgrssDialog("正在加载...");
+		}
+
+		@Override
+		protected void onPostExecute(Integer result) {
+			// TODO
+			if (result == Constants.SUCCESS) {
+				
+				
+			} else {
+				if (!StringUtil.isEmpty(msgs)) {
+					AlertDialogUtil.showAlertDialog(SpotActivity.this, msgs);
+				}
+			}
+			hideCustomProgressDialog();
+		}
+
+	}
+	
 	public class GetPTask extends AsyncTask<Integer, String, Integer> {
 		private Context mainFrame = null;
 

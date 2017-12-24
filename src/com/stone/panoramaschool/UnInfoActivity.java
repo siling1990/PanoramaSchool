@@ -1,10 +1,12 @@
 package com.stone.panoramaschool;
 
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.http.util.EncodingUtils;
 import org.json.JSONObject;
 
 import com.google.gson.Gson;
@@ -16,6 +18,7 @@ import com.stone.panoramaschool.entity.Spot;
 import com.stone.panoramaschool.entity.University;
 import com.stone.panoramaschool.util.AlertDialogUtil;
 import com.stone.panoramaschool.util.Constants;
+import com.stone.panoramaschool.util.FileUtil;
 import com.stone.panoramaschool.util.GsonUtil;
 import com.stone.panoramaschool.util.HttpUtil;
 import com.stone.panoramaschool.util.StringUtil;
@@ -36,6 +39,7 @@ import android.os.Message;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -48,6 +52,7 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 /**
  * com.stone.panoramaschool
@@ -241,13 +246,32 @@ public class UnInfoActivity extends Activity {
 					txtIN.setText(university.getUnInstruction());
 				}
 			}
-
 			// 设置默认图片
 			imageLogo.setImageResource(R.drawable.default_img);
 			imageLogo.setTag(university.getUnPic());
 			// //异步下载学校图片
 			imageLoader.displayImage(university.getUnPic(),imageLogo, options);
-			
+			imageLogo.setOnClickListener(new OnClickListener() {
+
+				@Override
+				public void onClick(View arg0) {
+					Intent intent = new Intent(UnInfoActivity.this, PanoramaGLActivity.class);
+					Log.d("*****全景图片地址****", university.getUnImage());
+					if (StringUtil.isEmpty(university.getUnImage())) {
+						Toast toast = Toast.makeText(UnInfoActivity.this, "暂无全景图片！", Toast.LENGTH_SHORT);
+						toast.setGravity(Gravity.CENTER, 0, 0);
+						toast.show();
+					}else{
+						writeToSD(university.getUnImage(),"","test.data");
+						StringUtil.saveInfo(UnInfoActivity.this, "PanoramaGL", university.getUnImage());
+						Spot ss=new Spot();
+						ss.setSpotName(university.getUnName());
+						StringUtil.saveInfo(UnInfoActivity.this, "SpotInfo", GsonUtil.getJsonValue(ss));
+						startActivity(intent);	
+					}
+					
+				}
+			});
 		}
 
 		// 加载数据
@@ -289,7 +313,29 @@ public class UnInfoActivity extends Activity {
 		});
 		load();
 	}
+	private void writeToSD(String imageUrl,String hotspots,String fileName) {
+		String result = "";
+		try {
+			InputStream in = getResources().openRawResource(
+					R.raw.json_spherical);
+			// 获取文件的字节数
+			int lenght = in.available();
+			// 创建byte数组
+			byte[] buffer = new byte[lenght];
+			// 将文件中的数据读到byte数组中
+			in.read(buffer);
+			result = EncodingUtils.getString(buffer, "utf-8");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		result = result.replaceAll("IMAGEPATH", imageUrl);
+		result=result.replace("HOTSPOTS", hotspots);
 
+		Log.d("JSONPL", result);
+
+		FileUtil.setStringToFile("/stone", UnInfoActivity.this, fileName,
+				result);
+	}
 	class SpotAdapterA extends BaseAdapter {
 		public class ViewHolder {
 			public TextView textSpotName;

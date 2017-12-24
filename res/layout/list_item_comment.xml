@@ -75,7 +75,8 @@
         android:layout_width="16dp"
         android:layout_height="16dp"
         android:layout_alignBottom="@+id/textZan"
-        android:layout_alignLeft="@+id/textView1"
+        android:layout_toRightOf="@+id/textZan"
+        android:layout_marginLeft="5dp"
         android:src="@drawable/heart_line" />
 
     <TextView

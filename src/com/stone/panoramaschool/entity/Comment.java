@@ -8,6 +8,7 @@ public class Comment {
 	private int userId;
 	private String userName;
 	private int spotId;
+	private long dateLine;
 
 	public Comment() {
 
@@ -72,6 +73,14 @@ public class Comment {
 
 	public void setUserName(String userName) {
 		this.userName = userName;
+	}
+
+	public long getDateLine() {
+		return dateLine;
+	}
+
+	public void setDateLine(long dateLine) {
+		this.dateLine = dateLine;
 	}
 
 }
