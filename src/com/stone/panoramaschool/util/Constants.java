@@ -16,6 +16,7 @@ public class Constants {
 	public static final String GETUNLISTBYP=HOST+"?action=getunlistbyprovince";
 	public static final String GETSPLISTBYUN=HOST+"?action=getspotlistbyun";
 	public static final String GETCOMLISTBYSP=HOST+"?action=getcommentlistbyspot";
+	public static final String GETSPOTBYID=HOST+"?action=getspotbyid";
 	public static final String ADDCOMMENT=HOST+"?action=addcomment";
 	
 	public final static int SUCCESS=1;

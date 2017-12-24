@@ -15,6 +15,8 @@ private String score;
 private String qq;
 private double lon;
 private double lat;
+private int dianzan;
+private String xgqj;
 
 public Spot(){}
 public Spot(int spotId,String spotName,String spotImage,String spotPanorama){
@@ -106,6 +108,18 @@ public String getQq() {
 }
 public void setQq(String qq) {
 	this.qq = qq;
+}
+public int getDianzan() {
+	return dianzan;
+}
+public void setDianzan(int dianzan) {
+	this.dianzan = dianzan;
+}
+public String getXgqj() {
+	return xgqj;
+}
+public void setXgqj(String xgqj) {
+	this.xgqj = xgqj;
 }
 
 
