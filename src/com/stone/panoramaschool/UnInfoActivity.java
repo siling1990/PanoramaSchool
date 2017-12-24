@@ -29,11 +29,12 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
-import android.graphics.Bitmap;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -41,6 +42,7 @@ import android.view.ViewGroup;
 import android.view.View.OnClickListener;
 import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
@@ -61,11 +63,12 @@ public class UnInfoActivity extends Activity {
 	private ImageView imageLogo;
 	private PullListView listViewSpot;
 	private ArrayList<Spot> spotList;
+	private ArrayList<Spot> spotSearchList;
 	private University university;
 	private ProgressBar moreProgressBar;
 	private SpotAdapterA spotAdapter;
-	private RelativeLayout relativeLayout3;
 	private Button btMore, btLess;
+	private EditText editSearch;
 
 	private Map<String, String> map;
 	private Gson gson;
@@ -124,7 +127,6 @@ public class UnInfoActivity extends Activity {
 		// imageLogo = (ImageView) findViewById(R.id.imageLogo);
 		btBack = (Button) findViewById(R.id.btBack);
 		btRefresh = (Button) findViewById(R.id.btRefresh);
-		relativeLayout3 = (RelativeLayout) findViewById(R.id.relativeLayout3);
 
 		btBack.setOnClickListener(new OnClickListener() {
 
@@ -148,6 +150,7 @@ public class UnInfoActivity extends Activity {
 		imageLogo = (ImageView) unVuewHead.findViewById(R.id.imageLogo);
 		btMore = (Button) unVuewHead.findViewById(R.id.btMore);
 		btLess = (Button) unVuewHead.findViewById(R.id.btLess);
+		editSearch = (EditText) unVuewHead.findViewById(R.id.editSearch);
 
 		btMore.setOnClickListener(new OnClickListener() {
 
@@ -173,6 +176,35 @@ public class UnInfoActivity extends Activity {
 						txtIN.setText(university.getUnInstruction());
 					}
 				}
+
+			}
+		});
+		
+		editSearch.addTextChangedListener(new TextWatcher() {
+
+			@Override
+			public void onTextChanged(CharSequence s, int start, int before,
+					int count) {
+				// TODO Auto-generated method stub
+				spotSearchList.clear();
+				for (int i = 0; i < spotList.size(); i++) {
+					if (spotList.get(i).getSpotName().contains(s)) {
+						spotSearchList.add(spotList.get(i));
+					}
+				}
+				spotAdapter = new SpotAdapterA(UnInfoActivity.this, spotSearchList);
+				listViewSpot.setAdapter(spotAdapter);
+
+			}
+
+			@Override
+			public void beforeTextChanged(CharSequence s, int start, int count,
+					int after) {
+
+			}
+
+			@Override
+			public void afterTextChanged(Editable s) {
 
 			}
 		});
@@ -220,6 +252,8 @@ public class UnInfoActivity extends Activity {
 
 		// 加载数据
 		spotList = new ArrayList<Spot>();
+		
+		spotSearchList= new ArrayList<Spot>();
 
 		spotAdapter = new SpotAdapterA(UnInfoActivity.this, spotList);
 
@@ -423,7 +457,7 @@ public class UnInfoActivity extends Activity {
 			try {
 				spotList = gson.fromJson(result, new TypeToken<List<Spot>>() {
 				}.getType());
-				Log.d("********patientList*******", spotList.size() + "");
+				Log.d("********spotList*******", spotList.size() + "");
 				return Constants.SUCCESS;
 			} catch (Exception e) {
 				msgs = e.getMessage();

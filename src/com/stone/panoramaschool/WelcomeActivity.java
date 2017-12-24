@@ -19,7 +19,7 @@ import android.view.Window;
 public class WelcomeActivity extends Activity {
 	private Handler handler = new Handler() {
 		public void handleMessage(Message msg) {
-			Intent intent=new Intent(WelcomeActivity.this, CityListActivity.class);
+			Intent intent=new Intent(WelcomeActivity.this, NoteActivity.class);
 			startActivity(intent);
 			WelcomeActivity.this.finish();
 		};

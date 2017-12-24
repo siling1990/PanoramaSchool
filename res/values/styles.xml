@@ -64,4 +64,7 @@
         <item name="android:windowNoTitle">true</item>
 
     </style>
+    <style name="NewAlertDialog" parent="@android:style/Theme.Dialog">
+        <item name="android:windowBackground">@drawable/alertdialog</item>
+    </style>
 </resources>

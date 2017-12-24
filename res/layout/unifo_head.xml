@@ -57,5 +57,41 @@
         android:background="@drawable/login_bg"
         android:visibility="gone"
         android:text="收起" />
+    <RelativeLayout
+            android:id="@+id/relativeLayout2"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginLeft="2dp"
+            android:layout_marginRight="2dp"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:background="@drawable/searchbar_bg" >
+
+            <Button
+                android:id="@+id/imageView1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="10dp"
+                android:background="@drawable/bt_search" />
+
+            <EditText
+                android:id="@+id/editSearch"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="15dp"
+                android:layout_toRightOf="@+id/imageView1"
+                android:background="@android:color/transparent"
+                android:ems="10"
+                android:hint="输入景点名称"
+                android:textSize="15sp" >
+            </EditText>
+        </RelativeLayout>
 
 </LinearLayout>

@@ -9,7 +9,7 @@
         android:targetSdkVersion="19" />
 
     <application
-        android:name="com.stone.panoramaschool.MyApplication"
+        android:name=".MyApplication"
         android:allowBackup="true"
         android:icon="@drawable/college360logo"
         android:label="@string/app_name"
@@ -17,10 +17,11 @@
         <meta-data
             android:name="com.baidu.lbsapi.API_KEY"
             android:value="YXefIqP5RxZj0YP4xk7Vu8he" />
+
         <activity
-            android:name="com.stone.panoramaschool.WelcomeActivity"
-            android:label="@string/app_name" 
-             android:theme="@style/Theme.Activity" >
+            android:name=".WelcomeActivity"
+            android:label="@string/app_name"
+            android:theme="@style/Theme.Activity" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -28,51 +29,56 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.stone.panoramaschool.CityListActivity"
-            android:label="@string/title_activity_city_list" 
-            android:theme="@style/Theme.Activity"  
-            android:screenOrientation="portrait">
-        </activity>
-        <activity
-            android:name="com.stone.panoramaschool.UniversityListActivity"
-            android:label="@string/title_activity_universitu" 
- 			android:theme="@style/Theme.Activity"  
- 			android:screenOrientation="portrait"           >
-        </activity>
-        <activity
-            android:name="com.stone.panoramaschool.UnInfoActivity"
-            android:label="@string/title_activity_un_info" 
-             android:theme="@style/Theme.Activity"
-             android:screenOrientation="portrait"
-            >
-        </activity>
-        <activity
-            android:name="com.stone.panoramaschool.SpotActivity"
-            android:label="@string/title_activity_spot" 
-            android:theme="@style/Theme.Activity" 
+            android:name=".CityListActivity"
+            android:label="@string/title_activity_city_list"
             android:screenOrientation="portrait"
-            >
+            android:theme="@style/Theme.Activity" >
         </activity>
         <activity
-            android:name="com.stone.panoramaschool.PanoramaGLActivity"
-            android:label="@string/title_activity_panorana_gl" 
-            android:theme="@style/Theme.Activity" 
-            android:launchMode="singleTask" android:screenOrientation="landscape"
-            >
+            android:name=".UniversityListActivity"
+            android:label="@string/title_activity_universitu"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.Activity" >
         </activity>
         <activity
-            android:name="com.stone.panoramaschool.OverlayDemo"
-            android:theme="@style/Theme.Activity" 
+            android:name=".UnInfoActivity"
+            android:label="@string/title_activity_un_info"
             android:screenOrientation="portrait"
-            android:label="@string/title_activity_panorana_gl"  >
+            android:theme="@style/Theme.Activity" >
         </activity>
-         <activity
-            android:name="com.stone.panoramaschool.WebActivity"
-            android:theme="@style/Theme.Activity" 
+        <activity
+            android:name=".SpotActivity"
+            android:label="@string/title_activity_spot"
             android:screenOrientation="portrait"
-            android:label="@string/title_activity_panorana_gl"  >
+            android:theme="@style/Theme.Activity" >
+        </activity>
+        <activity
+            android:name=".PanoramaGLActivity"
+            android:label="@string/title_activity_panorana_gl"
+            android:launchMode="singleTask"
+            android:screenOrientation="landscape"
+            android:theme="@style/Theme.Activity" >
+        </activity>
+        <activity
+            android:name=".OverlayDemo"
+            android:label="@string/title_activity_panorana_gl"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.Activity" >
+        </activity>
+        <activity
+            android:name=".WebActivity"
+            android:label="@string/title_activity_panorana_gl"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.Activity" >
+        </activity>
+        <activity
+            android:name=".NoteActivity"
+            android:label="@string/title_activity_panorana_gl"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.Activity" >
         </activity>
     </application>
+
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" >
     </uses-permission>
@@ -90,7 +96,7 @@
     </uses-permission>
     <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" >
     </uses-permission>
-<uses-permission android:name="android.permission.BAIDU_LOCATION_SERVICE" >
+    <uses-permission android:name="android.permission.BAIDU_LOCATION_SERVICE" >
     </uses-permission>
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" >
     </uses-permission>
@@ -127,11 +133,12 @@
     </uses-permission>
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
-    
-     <supports-screens
+
+    <supports-screens
         android:anyDensity="true"
         android:largeScreens="true"
         android:normalScreens="false"
         android:resizeable="true"
         android:smallScreens="true" />
+
 </manifest>

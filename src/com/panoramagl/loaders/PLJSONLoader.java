@@ -390,7 +390,7 @@ public class PLJSONLoader extends PLLoaderBase
 		                        float ath = (hotspot.has("ath") ? (float)hotspot.getDouble("ath") : 0.0f);
 		                        float width = (hotspot.has("width") ? (float)hotspot.getDouble("width") : PLConstants.kDefaultHotspotSize);
 		                        float height = (hotspot.has("height") ? (float)hotspot.getDouble("height") : PLConstants.kDefaultHotspotSize);
-		                    	PLIHotspot currentHotspot = new PLHotspot(identifier, atv, ath, width, height/2);
+		                    	PLIHotspot currentHotspot = new PLHotspot(identifier, atv, ath, width, height);
 		                    	if(hotspot.has("alpha"))
 		                    	{
 		                    		currentHotspot.setDefaultAlpha((float)hotspot.getDouble("alpha"));
@@ -404,28 +404,7 @@ public class PLJSONLoader extends PLLoaderBase
 		                    	if(hotspot.has("onClick"))
 		                    		currentHotspot.setOnClick(hotspot.getString("onClick"));
 		                    	this.loadHotspotTexture(currentHotspot, hotspot.getString("image"), urlBase, colorFormat);
-		            			
-		                    	panorama.addHotspot(currentHotspot);
-		                    	
-		                    	/////
-		                    	currentHotspot = new PLHotspot(identifier, atv+5, ath, width, height/2);
-		                    	if(hotspot.has("alpha"))
-		                    	{
-		                    		currentHotspot.setDefaultAlpha((float)hotspot.getDouble("alpha"));
-		                    		currentHotspot.setAlpha(currentHotspot.getDefaultAlpha());
-		                    	}
-		                    	if(hotspot.has("overAlpha"))
-		                    	{
-		                    		currentHotspot.setDefaultOverAlpha((float)hotspot.getDouble("overAlpha"));
-		                    		currentHotspot.setOverAlpha(currentHotspot.getDefaultOverAlpha());
-		                    	}
-		                    	if(hotspot.has("onClick"))
-		                    		currentHotspot.setOnClick(hotspot.getString("onClick"));
-		                    	if(hotspot.has("textImage")) {
-		            				this.loadHotspotTexture(currentHotspot, hotspot.getString("textImage"), urlBase, colorFormat);
-		            				panorama.addHotspot(currentHotspot);
-		            			}
-		                    	/////
+		            			panorama.addHotspot(currentHotspot);
 		                    }
 		                }
 		            }

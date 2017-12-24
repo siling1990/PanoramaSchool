@@ -365,6 +365,17 @@ public class CityListActivity extends Activity {
 				}
 			}
 			hideCustomProgressDialog();
+//			final AlertDialog  myDialog = new AlertDialog.Builder(CityListActivity.this).create(); 
+//            myDialog.show();  
+//            myDialog.getWindow().setContentView(R.layout.alert_dialog);
+//            myDialog.getWindow()  
+//            .findViewById(R.id.button_back_mydialog)  
+//            .setOnClickListener(new View.OnClickListener() {  
+//            @Override  
+//            public void onClick(View v) {  
+//                myDialog.dismiss();  
+//            }  
+//        });  
 		}
 
 	}
