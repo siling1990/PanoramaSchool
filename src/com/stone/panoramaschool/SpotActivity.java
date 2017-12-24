@@ -148,10 +148,14 @@ public class SpotActivity extends Activity {
 			@Override
 			public void onClick(View v) {
 				intent = new Intent(SpotActivity.this, WebActivity.class);
-				// intent.putExtra("hTitle","广告");
-				intent.putExtra("isOpenwindow", false);
-				intent.putExtra("url", spot.getQq().split("&")[1]);
-				startActivity(intent);
+				//	intent.putExtra("hTitle","广告");
+					intent.putExtra("isOpenwindow", false);
+					String tempUrl=spot.getQq().split("&")[0];
+					if(!StringUtil.isEmpty(tempUrl)) {
+						String url=spot.getQq().replaceFirst(tempUrl+"&", "");
+						intent.putExtra("url", url);
+						startActivity(intent);
+					}
 
 			}
 		});
