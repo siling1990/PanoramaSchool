@@ -6,7 +6,7 @@
 
     <uses-sdk
         android:minSdkVersion="8"
-        android:targetSdkVersion="19" />
+        android:targetSdkVersion="24" />
 
     <application
         android:name=".MyApplication"
@@ -16,7 +16,7 @@
         android:theme="@style/AppTheme" >
         <meta-data
             android:name="com.baidu.lbsapi.API_KEY"
-            android:value="YXefIqP5RxZj0YP4xk7Vu8he" />
+            android:value="pVhDUDO5uYGiLtSAUgilITVnr0WULsUw" />
 
         <activity
             android:name=".WelcomeActivity"
